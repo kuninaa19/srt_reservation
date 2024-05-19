@@ -4,17 +4,12 @@
 매진된 SRT 표의 예매를 도와주는 파이썬 프로그램입니다.  
 원하는 표가 나올 때 까지 새로고침하여 예약을 시도합니다.
 
-
-## 다운
-```cmd
-git clone https://github.com/kminito/srt_reservation.git
-```
   
-## 필요
-- 파이썬 3.7, 3.9에서 테스트 했습니다.
+## 가상환경 구축 및 라이브러리 설치
 
 ```py
-pip install -r requirements.txt
+$ pipenv install
+$ pipenv shell
 ```
 
 
@@ -39,13 +34,13 @@ pip install -r requirements.txt
 검색 결과 중 상위 2개가 예약 가능할 경우 예약
 
 ```cmd
-python quickstart.py --user 1234567890 --psw 000000 --dpt 동탄 --arr 동대구 --dt 20220117 --tm 08
+$ pipenv run python quickstart.py --user 1234567890 --psw 000000 --dpt 동탄 --arr 동대구 --dt 20220117 --tm 08
 ```
 
 **Optional**  
 예약대기 사용 및 검색 결과 상위 3개의 예약 가능 여부 확인
 ```cmd
-python quickstart.py --user 1234567890 --psw 000000 --dpt 동탄 --arr 동대구 --dt 20220117 --tm 08 --num 3 --reserve True
+$ pipenv run python quickstart.py --user 1234567890 --psw 000000 --dpt 동탄 --arr 동대구 --dt 20220117 --tm 08 --num 3 --reserve True
 ```
 
 **실행 결과**
