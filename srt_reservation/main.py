@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-
-import os
 import time
 from random import randint
 from datetime import datetime
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.common.exceptions import ElementClickInterceptedException, StaleElementReferenceException, WebDriverException
 
 from srt_reservation.exceptions import InvalidStationNameError, InvalidDateError, InvalidDateFormatError, InvalidTimeFormatError
 from srt_reservation.validation import station_list
-
-chromedriver_path = r'C:\workspace\chromedriver.exe'
 
 class SRT:
     def __init__(self, dpt_stn, arr_stn, dpt_dt, dpt_tm, num_trains_to_check=2, want_reserve=False):
@@ -59,10 +57,7 @@ class SRT:
         self.login_psw = login_psw
 
     def run_driver(self):
-        try:
-            self.driver = webdriver.Chrome(executable_path=chromedriver_path)
-        except WebDriverException:
-            self.driver = webdriver.Chrome(ChromeDriverManager().install())
+        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
     def login(self):
         self.driver.get('https://etk.srail.co.kr/cmc/01/selectLoginForm.do')
