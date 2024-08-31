@@ -13,6 +13,9 @@ from selenium.common.exceptions import ElementClickInterceptedException, StaleEl
 from srt_reservation.exceptions import InvalidStationNameError, InvalidDateError, InvalidDateFormatError, InvalidTimeFormatError
 from srt_reservation.validation import station_list
 
+import os
+os.environ['WDM_ARCH'] = 'arm64'
+
 class SRT:
     def __init__(self, dpt_stn, arr_stn, dpt_dt, dpt_tm, num_trains_to_check=2, want_reserve=False):
         """
@@ -57,7 +60,7 @@ class SRT:
         self.login_psw = login_psw
 
     def run_driver(self):
-        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=webdriver.ChromeOptions())
 
     def login(self):
         self.driver.get('https://etk.srail.co.kr/cmc/01/selectLoginForm.do')
@@ -110,7 +113,7 @@ class SRT:
 
     def book_ticket(self, standard_seat, i):
         # standard_seat는 일반석 검색 결과 텍스트
-        
+
         if "예약하기" in standard_seat:
             print("예약 가능 클릭")
 
