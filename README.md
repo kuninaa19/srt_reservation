@@ -7,9 +7,10 @@
   
 ## 가상환경 구축 및 라이브러리 설치
 
-```py
-$ pipenv install
+```bash
+$ pip install pipenv
 $ pipenv shell
+$ pipenv install
 ```
 
 
@@ -33,13 +34,13 @@ $ pipenv shell
 동탄 -> 동대구, 2022년 01월 17일 오전 8시 이후 기차  
 검색 결과 중 상위 2개가 예약 가능할 경우 예약
 
-```cmd
+```bash
 $ pipenv run python quickstart.py --user 1234567890 --psw 000000 --dpt 동탄 --arr 동대구 --dt 20220117 --tm 08
 ```
 
 **Optional**  
 예약대기 사용 및 검색 결과 상위 3개의 예약 가능 여부 확인
-```cmd
+```bash
 $ pipenv run python quickstart.py --user 1234567890 --psw 000000 --dpt 동탄 --arr 동대구 --dt 20220117 --tm 08 --num 3 --reserve True
 ```
 
