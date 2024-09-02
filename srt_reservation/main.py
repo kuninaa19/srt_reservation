@@ -145,6 +145,7 @@ class SRT:
         self.cnt_refresh += 1
         print(f"새로고침 {self.cnt_refresh}회")
         self.driver.implicitly_wait(10)
+        # 대기열 많을때 조정 default 0.5초
         time.sleep(0.5)
 
     def reserve_ticket(self, reservation, i):
@@ -175,6 +176,7 @@ class SRT:
                 return self.driver
 
             else:
+                # 예약이 안되었을 경우 새로고침 default 2~4초, 대기열 많으면 조정
                 time.sleep(randint(2, 4))
                 self.refresh_result()
 
