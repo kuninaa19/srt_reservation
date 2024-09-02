@@ -132,7 +132,7 @@ class SRT:
             # 예약이 성공하면
             if self.driver.find_elements(By.ID, 'isFalseGotoMain'):
                 self.is_booked = True
-                print("예약 성공")
+                print("예약 성공\a\a\a\a")
                 return self.driver
             else:
                 print("잔여석 없음. 다시 검색")
@@ -149,7 +149,7 @@ class SRT:
 
     def reserve_ticket(self, reservation, i):
         if "신청하기" in reservation:
-            print("예약 대기 완료")
+            print("예약 대기 완료\a")
             self.driver.find_element(By.CSS_SELECTOR,
                                      f"#result-form > fieldset > div.tbl_wrap.th_thead > table > tbody > tr:nth-child({i}) > td:nth-child(8) > a").click()
             self.is_booked = True
