@@ -39,7 +39,6 @@ class SRT:
         self.driver = None
 
         self.is_booked = False  # 예약 완료 되었는지 확인용
-        self.cnt_refresh = 0  # 새로고침 회수 기록
 
         self.check_input()
 
@@ -106,6 +105,7 @@ class SRT:
         print("기차를 조회합니다")
         print(f"출발역:{self.dpt_stn} , 도착역:{self.arr_stn}\n날짜:{self.dpt_dt}, 시간: {self.dpt_tm}시 이후\n{self.num_trains_to_check}개의 기차 중 예약")
         print(f"예약 대기 사용: {self.want_reserve}")
+        print(f"종료 버튼 = 윈도우 ctrl+c, 맥 command+c")
 
         self.driver.find_element(By.XPATH, "//input[@value='조회하기']").click()
         # 대기열 많을때 조정, default 5초
@@ -133,7 +133,16 @@ class SRT:
             # 예약이 성공하면
             if self.driver.find_elements(By.ID, 'isFalseGotoMain'):
                 self.is_booked = True
-                print("예약 성공\a\a\a\a")
+                print("예약 성공")
+                print("알람은 1분동안 울립니다. 원하지않을경우 프로그램 수동 종료 해주세요")
+                print("결제기한은 10분입니다. 10분내로 결제해주세요")
+
+                # 결제까지 연동?
+                for _ in range(12):
+                    # 알림 파일 대략 5초
+                    sound_file = './sound/Alarm.m4a'
+                    os.system(f'afplay "{sound_file}"')
+
                 return self.driver
             else:
                 print("잔여석 없음. 다시 검색")
@@ -143,8 +152,6 @@ class SRT:
     def refresh_result(self):
         submit = self.driver.find_element(By.XPATH, "//input[@value='조회하기']")
         self.driver.execute_script("arguments[0].click();", submit)
-        self.cnt_refresh += 1
-        print(f"새로고침 {self.cnt_refresh}회")
         self.driver.implicitly_wait(10)
         time.sleep(0.5)
 
@@ -176,22 +183,22 @@ class SRT:
                 return self.driver
 
             else:
+                # self.driver.implicitly_wait(10)
                 # default 2~4초, 대기열 많으면 조정
                 time.sleep(randint(2, 4))
                 self.refresh_result()
 
     def run(self, login_id, login_psw):
-        self.run_driver()
-        self.set_log_info(login_id, login_psw)
-        self.login()
-        self.go_search()
-        self.check_result()
+        try:
+            self.run_driver()
+            self.set_log_info(login_id, login_psw)
+            self.login()
 
-#
-# if __name__ == "__main__":
-#     srt_id = os.environ.get('srt_id')
-#     srt_psw = os.environ.get('srt_psw')
-#
-#     srt = SRT("동탄", "동대구", "20220917", "08")
-#     srt.run(srt_id, srt_psw)
-
+            while not self.is_booked:
+                try:
+                    self.go_search()
+                    self.check_result()
+                except WebDriverException as err:
+                    print("WebDriverException")
+        except Exception as e:
+            print(e)
