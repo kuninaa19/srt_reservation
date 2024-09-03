@@ -105,7 +105,7 @@ class SRT:
         print("기차를 조회합니다")
         print(f"출발역:{self.dpt_stn} , 도착역:{self.arr_stn}\n날짜:{self.dpt_dt}, 시간: {self.dpt_tm}시 이후\n{self.num_trains_to_check}개의 기차 중 예약")
         print(f"예약 대기 사용: {self.want_reserve}")
-        print(f"종료 버튼 = 윈도우 ctrl+c, 맥 command+c")
+        print(f"종료 버튼 = [ CTRL + c ]")
 
         self.driver.find_element(By.XPATH, "//input[@value='조회하기']").click()
         # 대기열 많을때 조정, default 5초
